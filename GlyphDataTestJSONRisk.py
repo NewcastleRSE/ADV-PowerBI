@@ -230,6 +230,22 @@ bpy.data.objects["Plane"].data.materials[0] = bg_colour
 bpy.data.objects["Plane.001"].data.materials[0] = bg_colour
 bpy.data.objects["Plane.002"].data.materials[0] = bg_colour
 
+bpy.data.objects["Least.U.TXT"].data.materials[0] = axis_label_colour
+bpy.data.objects["Most.U.TXT"].data.materials[0] = axis_label_colour
+bpy.data.objects["No.Data.TXT"].data.materials[0] = axis_label_colour
+bpy.data.objects["Uncertainty.TXT"].data.materials[0] = axis_label_colour
+
+key_label = j_data["key_name"]
+key_low = j_data["key_values"]["low_value"]
+key_high = j_data["key_values"]["high_value"]
+
+key_low = key_low.replace(' ', '\n')
+key_high = key_high.replace(' ', '\n')
+
+bpy.data.objects["Uncertainty.TXT"].data.body = key_label
+bpy.data.objects["Least.U.TXT"].data.body = key_low
+bpy.data.objects["Most.U.TXT"].data.body = key_high
+
 # ---------------------------------------------------------------
 print("Num Glyphs: " + str(len(values)))
 
