@@ -292,7 +292,11 @@ for idx in range(0, len(values)) :
     d_risk = float(datavalues["r"])
     
     risk_range = max_risk - min_risk
-    risk_val = (d_risk - min_risk) / risk_range
+    
+    if (risk_range <= 0):
+        risk_val = d_risk
+    else:
+        risk_val = (d_risk - min_risk) / risk_range
     
     p_x = start_x + ((d_x - x_axis_values[0]) * (x_axis_length / (x_axis_values[len(x_axis_values)-1] - x_axis_values[0])))
     p_y = start_y + ((d_y - y_axis_values[0]) * (y_axis_length / (y_axis_values[len(y_axis_values)-1] - y_axis_values[0])))
