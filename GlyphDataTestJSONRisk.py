@@ -29,6 +29,8 @@ from Glyph import Glyph
 from Glyph import createGlyph
 from Glyph import initGlyph
 
+from KeyTemperature import drawKeyTemperature
+
 # Detect current working directory -------
 currentDir = os.path.dirname(__file__)
 strs = currentDir.split("\\")
@@ -234,6 +236,7 @@ bpy.data.objects["Least.U.TXT"].data.materials[0] = axis_label_colour
 bpy.data.objects["Most.U.TXT"].data.materials[0] = axis_label_colour
 bpy.data.objects["No.Data.TXT"].data.materials[0] = axis_label_colour
 bpy.data.objects["Uncertainty.TXT"].data.materials[0] = axis_label_colour
+bpy.data.objects["KeyTitle.TXT"].data.materials[0] = axis_label_colour
 
 key_label = j_data["key_name"]
 key_low = j_data["key_values"]["low_value"]
@@ -245,6 +248,7 @@ key_high = key_high.replace(' ', '\n')
 bpy.data.objects["Uncertainty.TXT"].data.body = key_label
 bpy.data.objects["Least.U.TXT"].data.body = key_low
 bpy.data.objects["Most.U.TXT"].data.body = key_high
+bpy.data.objects["KeyTitle.TXT"].data.body = "Temperature"
 
 # ---------------------------------------------------------------
 print("Num Glyphs: " + str(len(values)))
@@ -281,6 +285,8 @@ y_inc = round((max_y - min_y)/8.0, 2)
 
 drawXAxis(min_x, max_x, x_inc, j_data["x_axis"])
 drawYAxis(min_y, max_y, y_inc, j_data["y_axis"])
+
+drawKeyTemperature(0.0 , ortho, axis_value_colour)
 
 for idx in range(0, len(values)) :    
     datavalues = values[idx]
