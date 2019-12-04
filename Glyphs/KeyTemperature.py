@@ -35,7 +35,7 @@ def drawKeyTemperature(average, ortho, text_material):
     cam_y = bpy.context.scene.camera.location[1]
     
     # init variables
-    atX = cam_x + 9.3
+    atX = cam_x + 9.28
     atY =  cam_y + 4.5
     atZ =  1.4
     temp = 30
@@ -63,9 +63,9 @@ def drawKeyTemperature(average, ortho, text_material):
         txt.data.align_x = 'RIGHT';
         txt.data.align_y = 'CENTER';
         bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY');
-        txt.location=(atX + 1.4, atY, atZ);
+        txt.location=(atX + 1.3, atY, atZ);
         
-        atY =  atY - 1.35
+        atY =  atY - 1.355
         temp -= 5
         
     minY = atY + 0.2
