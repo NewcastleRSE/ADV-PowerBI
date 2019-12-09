@@ -5,8 +5,11 @@ Project: Automating Data Visualisation (Turing)
 PI: [Nick Holliman](https://www.ncl.ac.uk/computing/people/profile/nickholliman.html)  
 RSE(s): [Mike Simpson](https://www.ncl.ac.uk/digitalinstitute/staff/profile/mikesimpson.html)    
 
+## Notes
+There are two Power BI files in the repository, one contains some test python code (examples of how to use matplotlib/seaborn to draw Power BI graphs) and the second contains the Blender code.
+
 ## Instructions
-Currently, there are some hard-coded links in the files, these will need to be updated for the scripts to work. Most currently point at "D:\Projects\ADV-PowerBI\"
+Currently, there are some hard-coded links in the files, these will need to be updated for the scripts to work. The "blender_test.pbix" visualisations include a coded "filepath" variable, which currently points at "D:\Projects\ADV-PowerBI". This needs to be changed to point at the directory into which the files have been downloaded.
 
 ## Installation
 The scripts will only work if the following are installed on your PC:
