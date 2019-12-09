@@ -19,6 +19,9 @@ The scripts will only work if the following are installed on your PC:
 Run the following commands:<br />
 `py -m pip install pandas` <br />
 `py -m pip install matplotlib` <br />
+
+Seaborn is required for some of the test python IMD visualisations:  
+
 `py -m pip install seaborn` <br />
 
 This should install all the required dependencies. 
