@@ -259,8 +259,8 @@ max_risk = None
 for idx in range(0, len(values)) :    
     datavalues = values[idx]
     
-    d_x = round(float(datavalues["x"]), 2)
-    d_y = round(float(datavalues["y"]), 2)
+    d_x = float(datavalues["x"])
+    d_y = float(datavalues["y"])
     
     if (min_x == None or d_x < min_x):
         min_x = d_x
@@ -272,14 +272,14 @@ for idx in range(0, len(values)) :
     if (max_y == None or d_y > max_y):
         max_y = d_y
         
-    d_r = round(float(datavalues["r"]), 2)
+    d_r = float(datavalues["r"])
     if (min_risk == None or min_risk > d_r):
         min_risk = d_r
     if (max_risk == None or max_risk < d_r):
         max_risk = d_r  
     
-x_inc = round((max_x - min_x)/10.0, 2)
-y_inc = round((max_y - min_y)/8.0, 2)
+x_inc = (max_x - min_x)/10.0
+y_inc = (max_y - min_y)/8.0
 
 #------------------------------------------------------------------------------------------------------------------- RENDER
 
