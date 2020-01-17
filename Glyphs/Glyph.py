@@ -109,11 +109,7 @@ def initGlyph( vnce, cnt, atX, atY, atZ, r, value, name, force = False ):
         while ( value >  metOfficeLimits[i] ):
             i += 1
         
-        #print("Colour index: " + str(i))
-        
         diffuseColour = ( float(metOfficeColours[i][0])/255.0,float(metOfficeColours[i][1])/255.0,float(metOfficeColours[i][2])/255.0, 1.0 )
-        
-        print("Colour: " + str(diffuseColour))
         
         mat = makeFlatColor(diffuseColour, name + "-mat")
         mat = bpy.data.materials[name + "-mat"]
@@ -141,7 +137,7 @@ def createGlyph( glyph, minVariance, maxVariance, ortho, numGlyphs ):
     text = glyph.text
     vnce = glyph.variance
     
-    bpy.context.scene.cursor.location = (0.0, 0.0, 0.0)	#set 3d cursor to origin first!!!
+    bpy.context.scene.cursor.location = (0.0, 0.0, 0.0) #set 3d cursor to origin first!!!
     
     #Draw cylinder
     if (atZ != atZ2):
@@ -155,43 +151,43 @@ def createGlyph( glyph, minVariance, maxVariance, ortho, numGlyphs ):
     cyl_colour = bpy.context.object
     cyl_colour.name = 'glyph-colour-'+name
     cyl_colour.select_set(True)
+    
+    mat.shadow_method = 'NONE'
     setMaterial(cyl_colour, mat)
     
     if ortho==False:
         cnst = cyl_colour.constraints.new('DAMPED_TRACK')
         cnst.target = bpy.context.scene.camera
         cnst.track_axis='TRACK_Z'
-        
-        
     
     var_diff = maxVariance - minVariance
     increment = var_diff / numGlyphs
     
-    print("-- variance: " + str(vnce))
+    #print("-- variance: " + str(vnce))
     
     if (vnce < 0):
-        print("-- category: error")
+        #print("-- category: error")
         fileName=filePath+"/glyphs/sxna04-08-00-0.csv"
     elif (vnce == 0.0):
-        print("-- category: 0")
+        #print("-- category: 0")
         fileName=filePath+"/glyphs/sgnl00-00-00-0.csv"
     elif (vnce < increment*1):
-        print("-- category: 1")
+        #print("-- category: 1")
         fileName=filePath+"/glyphs/sgnl03-00-00-0.csv"
     elif (vnce < increment*2):
-        print("-- category: 2")
+        #print("-- category: 2")
         fileName=filePath+"/glyphs/sgnl06-00-00-0.csv"
     elif (vnce < increment*3):
-        print("-- category: 3")
+        #print("-- category: 3")
         fileName=filePath+"/glyphs/sgnl12-00-00-0.csv"
     elif (vnce < increment*4):
-        print("-- category: 4")
+        #print("-- category: 4")
         fileName=filePath+"/glyphs/sgnl24-00-00-0.csv"
     elif (vnce < increment*5):
-        print("-- category: 5")
+        #print("-- category: 5")
         fileName=filePath+"/glyphs/sgnl48-00-00-0.csv"
     else: #if (vnce < 0.35):
-        print("-- category: 6")
+        #print("-- category: 6")
         fileName=filePath+"/glyphs/sgnl96-00-00-0.csv"
     
     geom = fileReadVerts( fileName )

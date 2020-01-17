@@ -63,7 +63,7 @@ def drawKeyTemperature(average, ortho, text_material):
         txt.data.align_x = 'RIGHT';
         txt.data.align_y = 'CENTER';
         bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY');
-        txt.location=(atX + 1.3, atY, atZ);
+        txt.location=(atX + 1.1, atY, atZ);
         
         atY =  atY - 1.355
         temp -= 5

@@ -1,11 +1,6 @@
 import bpy
 
 class Material:
-    def set_cycles(self):
-        scn = bpy.context.scene
-        if not scn.render.engine == 'CYCLES':
-            scn.render.engine = 'CYCLES'
-
     def make_material(self, name):
         self.mat = bpy.data.materials.new(name)
         self.mat.use_nodes = True
@@ -36,7 +31,7 @@ class Material:
         
 def makeFlatColor(flatColour, flatName):
     m = Material()
-    m.set_cycles()
+    
     thisMat = m.make_material(flatName)
     for n in m.nodes:
         m.nodes.remove(n)
@@ -65,7 +60,7 @@ def makeFlatColor(flatColour, flatName):
 
 def makePrincipled(principledColor, principledName):
     m = Material()
-    m.set_cycles()
+    
     thisMat = m.make_material(principledName)
     for n in m.nodes:
         m.nodes.remove(n)
@@ -84,7 +79,7 @@ def makePrincipled(principledColor, principledName):
 
 def makeEmissive(emissiveColour, emissiveName):
     m = Material()
-    m.set_cycles()
+    
     thisMat = m.make_material(emissiveName)
     for n in m.nodes:
         m.nodes.remove(n)
@@ -95,6 +90,32 @@ def makeEmissive(emissiveColour, emissiveName):
     
     materialOutput = m.makeNode('ShaderNodeOutputMaterial', 'Material Output')
     m.link(emission, 'Emission', materialOutput, 'Surface')
+    
+    return thisMat
+    
+def makeEmissiveAlpha(emissiveColour, emissiveName):
+    m = Material()
+    
+    thisMat = m.make_material(emissiveName)
+    for n in m.nodes:
+        m.nodes.remove(n)
+       
+    transparentBSDF = m.makeNode(
+        'ShaderNodeBsdfTransparent', 'Transparent BSDF')
+    transparentBSDF.inputs["Color"].default_value = [1.0, 1.0, 1.0, 1.0]
+    
+    emission = m.makeNode('ShaderNodeEmission', 'Emission')
+    emission.inputs["Color"].default_value = emissiveColour
+    emission.inputs["Strength"].default_value = 1.0
+        
+    mixShader = m.makeNode('ShaderNodeMixShader', 'Mix Shader')
+    
+    mixShader.inputs['Fac'].default_value = emissiveColour[3]
+    m.link(transparentBSDF, 'BSDF', mixShader, 1)
+    m.link(emission, 'Emission', mixShader, 2)
+    
+    materialOutput = m.makeNode('ShaderNodeOutputMaterial', 'Material Output')
+    m.link(mixShader, 'Shader', materialOutput, 'Surface')
     
     return thisMat
 
