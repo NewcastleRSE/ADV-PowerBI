@@ -5,6 +5,11 @@ Project: Automating Data Visualisation (Turing)
 PI: [Nick Holliman](https://www.ncl.ac.uk/computing/people/profile/nickholliman.html)  
 RSE(s): [Mike Simpson](https://www.ncl.ac.uk/digitalinstitute/staff/profile/mikesimpson.html)    
 
+## Blend Files 
+The projects that use the city model will require the .blend file to be downloaded from AWS (as they are too big to store on GitHub).
+
+https://turing-vis-blender.s3.eu-west-2.amazonaws.com/blend+files/CityModel.blend
+
 ## Notes
 There are two Power BI files in the repository, one contains some test python code (examples of how to use matplotlib/seaborn to draw Power BI graphs) and the second contains the Blender code.
 
