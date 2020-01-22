@@ -34,8 +34,8 @@ from KeyTemperature import drawKeyTemperature
 
 from latlonTOukng import WGS84toOSGB36
 
-E_adj = -424132
-N_adj = -564179
+E_adj = -424500
+N_adj = -564500
 
 # Detect current working directory -------
 currentDir = os.path.dirname(__file__)
@@ -280,8 +280,12 @@ for idx in range(0, len(values)) :
     if background == "map":
         E, N = WGS84toOSGB36(lat, lon)
 
-        d_x = (E + E_adj) / 100
-        d_y = (N + N_adj) / 100
+        d_x = (E + E_adj)
+        d_y = (N + N_adj)
+        
+        if d_x > 500 or d_x < -500 or d_y > 500 or d_y < -500:
+            #not on tile, ignore
+            continue
     else:
         d_x = lon
         d_y = lat
@@ -304,14 +308,14 @@ for idx in range(0, len(values)) :
 
 #------------------------------------------------------------------------------------------------------------------- RENDER
 
+bpy.context.window.scene = bpy.data.scenes['Overlay']
+
 if background == "graph":
     x_inc = (max_x - min_x)/10.0
     y_inc = (max_y - min_y)/8.0
 
     drawXAxis(min_x, max_x, x_inc, j_data["x_axis_label"])
     drawYAxis(min_y, max_y, y_inc, j_data["y_axis_label"])
-
-bpy.context.window.scene = bpy.data.scenes['Overlay']
 
 drawKeyTemperature(0.0 , ortho, axis_value_colour)
 
@@ -324,14 +328,14 @@ if background == "map":
     cam_x = ((min_x + max_x) / 2.0) + cam_offset
     cam_y = (min_y + max_y) / 2.0
 
-    cam_orth_scale_x = (max_x - min_x)
-    cam_orth_scale_y = (max_y - min_y)
+    cam_orth_scale_x = (max_x - min_x) * 1.1
+    cam_orth_scale_y = (max_y - min_y) * 1.1
 
     cam_orth_scale = max(cam_orth_scale_x, cam_orth_scale_y) * 2.0
     cam_orth_scale = max(cam_orth_scale, 1.5)
 
     camera = bpy.context.scene.objects["Camera"]
-    camera.location = (cam_x, cam_y, 25)
+    camera.location = (cam_x, cam_y, 500)
     camera.data.ortho_scale = cam_orth_scale
 
 for idx in range(0, len(values)) :    
@@ -343,8 +347,12 @@ for idx in range(0, len(values)) :
     if background == "map":
         E, N = WGS84toOSGB36(lat, lon)
 
-        d_x = (E + E_adj) / 100
-        d_y = (N + N_adj) / 100
+        d_x = (E + E_adj)
+        d_y = (N + N_adj)
+        
+        if d_x > 500 or d_x < -500 or d_y > 500 or d_y < -500:
+            #not on tile, ignore
+            continue
     else:
         d_x = start_x + ((lon - x_axis_values[0]) * (x_axis_length / (x_axis_values[len(x_axis_values)-1] - x_axis_values[0])))
         d_y = start_y + ((lat - y_axis_values[0]) * (y_axis_length / (y_axis_values[len(y_axis_values)-1] - y_axis_values[0])))
@@ -362,13 +370,17 @@ for idx in range(0, len(values)) :
     
     if background == "map":
         #glyph_scale = (cam_orth_scale / 1.5) * 0.25    
-        glyph_size = 0.1 #* glyph_scale
+        glyph_size = 10.0 #* glyph_scale
         scale = glyph_size + (risk_val * glyph_size)
+        force = False
+        height = 100.0
     else:
         glyph_size = 0.5
         scale = glyph_size + (risk_val * glyph_size)
+        force = True
+        height = 1.0
     
-    glyph = initGlyph(d_uncertainty, 1, d_x, d_y, 1.0, scale, d_temperature, "data-glyph-"+str(idx), force=True) 
+    glyph = initGlyph(d_uncertainty, 1, d_x, d_y, height, scale, d_temperature, "data-glyph-"+str(idx), force) 
     createGlyph( glyph, minVariance, maxVariance, ortho, numGlyphs )
 
 
