@@ -299,12 +299,13 @@ for idx in range(0, len(values)) :
         min_y = d_y
     if (max_y == None or d_y > max_y):
         max_y = d_y
-        
-    d_r = float(datavalues["r"])
-    if (min_risk == None or min_risk > d_r):
-        min_risk = d_r
-    if (max_risk == None or max_risk < d_r):
-        max_risk = d_r
+    
+    if 'r' in datavalues:
+        d_r = float(datavalues["r"])
+        if (min_risk == None or min_risk > d_r):
+            min_risk = d_r
+        if (max_risk == None or max_risk < d_r):
+            max_risk = d_r
 
 #------------------------------------------------------------------------------------------------------------------- RENDER
 
@@ -352,6 +353,7 @@ for idx in range(0, len(values)) :
         
         if d_x > 500 or d_x < -500 or d_y > 500 or d_y < -500:
             #not on tile, ignore
+            #print("glyph not on tile")
             continue
     else:
         d_x = start_x + ((lon - x_axis_values[0]) * (x_axis_length / (x_axis_values[len(x_axis_values)-1] - x_axis_values[0])))
@@ -359,14 +361,18 @@ for idx in range(0, len(values)) :
     
     d_uncertainty = float(datavalues["u"])
     d_temperature = float(datavalues["v"])
-    d_risk = float(datavalues["r"])
     
-    risk_range = max_risk - min_risk
+    if 'r' in datavalues:
+        d_risk = float(datavalues["r"])
+        risk_range = max_risk - min_risk
     
-    if (risk_range <= 0):
-        risk_val = d_risk
+        if (risk_range <= 0):
+            risk_val = d_risk
+        else:
+            risk_val = (d_risk - min_risk) / risk_range
     else:
-        risk_val = (d_risk - min_risk) / risk_range
+        #print ("> No risk data")
+        risk_val = 0.5
     
     if background == "map":
         #glyph_scale = (cam_orth_scale / 1.5) * 0.25    
