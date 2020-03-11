@@ -15,7 +15,7 @@ x_data = dataset.x
 y_data = dataset.y
 value_data = dataset.temperature
 uncertainty_data = dataset.uncertainty
-risk_data = dataset.risk
+risk_data = dataset.risk	# "None" if no data
 
 x_axis_label = dataset.columns[0]
 y_axis_label = dataset.columns[1]
@@ -38,8 +38,11 @@ idx = 0
 
 for x in value_data:    
     j_data = { 'x': float(x_data[idx]), 'y': float(y_data[idx]), 'u': float(uncertainty_data[idx]), 'v': float(value_data[idx]), 'r': float(risk_data[idx]) }
-    json_data['data'].append(j_data)
     
+	if (risk_data != None):
+        j_data.update( { 'r': float(risk_data[idx]) } )
+	
+	json_data['data'].append(j_data)
     idx = idx + 1
 
 json_str = json.dumps(json_data, separators=(',', ':'))

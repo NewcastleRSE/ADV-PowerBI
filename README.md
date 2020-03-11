@@ -11,11 +11,6 @@ Script.py contains code that can be copy-pasted into the Python window in PowerB
 * This section also includes all variable information, which will have to be updated to refer to the columns/fields of the specific dataset that you are working with.
 * This section also contains the 'format' of the visualisation, which allows you to select betweeen "graph", which is a simple scatter plot, and "map" which uses the 3D Model as a backdrop (if using latitute and longitude data).
 
-## Blend Files 
-The projects that use the city model will require the .blend file to be downloaded from AWS (as they are too big to store on GitHub).
-
-https://turing-vis-blender.s3.eu-west-2.amazonaws.com/blend+files/CityModel.blend
-
 ## Notes
 There is a Power BI file in the repository, which contains some examples of how the code has been adapted to work with several different datasets.
 
