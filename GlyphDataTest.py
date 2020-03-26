@@ -258,13 +258,15 @@ key_label = j_data["key_name"]
 key_low = j_data["key_values"]["low_value"]
 key_high = j_data["key_values"]["high_value"]
 
+value_key_label = j_data["value_key_label"]
+
 key_low = key_low.replace(' ', '\n')
 key_high = key_high.replace(' ', '\n')
 
 bpy.data.objects["Uncertainty.TXT"].data.body = key_label
 bpy.data.objects["Least.U.TXT"].data.body = key_low
 bpy.data.objects["Most.U.TXT"].data.body = key_high
-bpy.data.objects["KeyTitle.TXT"].data.body = "Temperature"
+bpy.data.objects["KeyTitle.TXT"].data.body = value_key_label
 
 # ---------------------------------------------------------------
 
@@ -318,7 +320,7 @@ if background == "graph":
     drawXAxis(min_x, max_x, x_inc, j_data["x_axis_label"])
     drawYAxis(min_y, max_y, y_inc, j_data["y_axis_label"])
 
-drawKeyTemperature(0.0 , ortho, axis_value_colour)
+drawKeyTemperature(0.0, ortho, axis_value_colour)
 
 if background == "map":
     bpy.context.window.scene = bpy.data.scenes['Scene']
